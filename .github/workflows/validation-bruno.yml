@@ -15,7 +15,6 @@ on:
       - development
     paths:
       - 'test/TestCollection/**'
-
     
 jobs:
   Run-Dev-Tests:

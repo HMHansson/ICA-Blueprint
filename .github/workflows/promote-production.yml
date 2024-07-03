@@ -24,11 +24,10 @@
     # -------------------------------
     Promote-Prod-Assets:
       uses: HMHansson/ICA-DevOps/.github/workflows/promote.yml@main
-      secrets:
-        WMIO_PASSWORD: ${{ secrets.WMIO_PASSWORD_PROD }}
+      secrets: inherit
       with:
-        WMIO_ENVIRONMENT: production
-  
+        environment: Production
+      
     # -------------------------------
     # Validate PROD with test cases
     # -------------------------------
@@ -36,10 +35,8 @@
       if: ${{ always() && contains(join(needs.*.result, ','), 'success') }}
       needs: [Promote-Prod-Assets]
       uses: HMHansson/ICA-DevOps/.github/workflows/validation-bruno.yml@main
-      secrets:
-        B2B_PASSWORD: ${{ secrets.B2B_PASSWORD_PROD }}
-        WMIO_PASSWORD: ${{ secrets.WMIO_PASSWORD_PROD }}
+      secrets: inherit
       with:
-        WMIO_ENVIRONMENT: production
+        environment: Production
   
   
