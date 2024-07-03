@@ -16,7 +16,7 @@ on:
     branches:
       - test
     paths:
-      - 'assets/do_not_promote/**'
+      - 'assets/**'
 
 jobs:
   # -------------------------------
@@ -24,10 +24,9 @@ jobs:
   # -------------------------------
   Promote-Test-Assets:
     uses: HMHansson/ICA-DevOps/.github/workflows/promote.yml@main
-    secrets:
-      WMIO_PASSWORD: ${{ secrets.WMIO_PASSWORD_TEST }}
+    secrets: inherit
     with:
-      WMIO_ENVIRONMENT: test
+      environment: Test
 
   # -------------------------------
   # Validate TEST with test cases
@@ -36,9 +35,6 @@ jobs:
     if: ${{ always() && contains(join(needs.*.result, ','), 'success') }}
     needs: [Promote-Test-Assets]
     uses: HMHansson/ICA-DevOps/.github/workflows/validation-bruno.yml@main
-    secrets:
-      B2B_PASSWORD: ${{ secrets.B2B_PASSWORD_TEST }}
-      WMIO_PASSWORD: ${{ secrets.WMIO_PASSWORD_TEST }}
+    secrets: inherit
     with:
-      WMIO_ENVIRONMENT: test
-
+      environment: Test
