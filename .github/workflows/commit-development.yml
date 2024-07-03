@@ -19,18 +19,15 @@ on: [workflow_dispatch]
 jobs:
   Validate-Dev:
     uses: HMHansson/ICA-DevOps/.github/workflows/validation-bruno.yml@main
-    secrets:
-      B2B_PASSWORD: ${{ secrets.B2B_PASSWORD_DEV }}
-      WMIO_PASSWORD: ${{ secrets.WMIO_PASSWORD_DEV }}
+    secrets: inherit
     with:
-      WMIO_ENVIRONMENT: development
+      environment: Development
 
   Commit-Development-Assets:
     if: ${{ always() && contains(join(needs.*.result, ','), 'success') }}
     needs: [Validate-Dev]
     uses: HMHansson/ICA-DevOps/.github/workflows/commit-development.yml@main
-    secrets:
-      WMIO_PASSWORD: ${{ secrets.WMIO_PASSWORD_DEV }}
+    secrets: inherit
     with:
-      WMIO_ENVIRONMENT: development
+      environment: Development
   

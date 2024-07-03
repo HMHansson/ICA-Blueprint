@@ -15,10 +15,10 @@ on:
       - development
     paths:
       - 'test/TestCollection/**'
-
     
 jobs:
   Run-Dev-Tests:
     uses: HMHansson/ICA-DevOps/.github/workflows/validation-bruno.yml@main
+    secrets: inherit
     with:
       environment: Development
