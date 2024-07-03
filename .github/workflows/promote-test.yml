@@ -4,7 +4,7 @@
 #   - This pipeline is triggered by a github Pull Request/merge 
 #
 #   1) Checks out test branch 
-#   2) Run an import of all test assets for this project in wM.io TEST environment
+#   2) Run an import of all assets for this project in wM.io TEST environment
 #   3) Run predefined tests for this project in wM.io TEST environment
 #
 # ------------------------------------------------------------------------------
