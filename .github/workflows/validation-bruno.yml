@@ -1,9 +1,17 @@
 # ------------------------------------------------------------------------------
-# Github Workflow to validate functionality using Postman Collections
+# Github Workflow to validate functionality using Bruno Collections
 #
 #  - This pipeline is triggered by
 #     a) Manually start this workflow (from Github actions)
 #     b) commit/push bruno test cases to development branch (using git client)
+#
+#   Note:
+#     - Access to wM.io B2B:
+#         a) uses the username from the environment.bru file (not a GitHub environment variable)
+#         b) uses the password from the GitHub environment secrets variable
+#     - Access to wM.io Integration:
+#         a) uses the username from the environment.bru file (not a GitHub environment variable)
+#         b) uses the password from the GitHub environment secrets variable
 #
 # ------------------------------------------------------------------------------
 name: Dev Test Case Validation

@@ -8,35 +8,35 @@
 #   3) Run predefined tests for this project in wM.io PROD environment
 #
 # ------------------------------------------------------------------------------
-  name: Deploy Production
-  run-name: Promote to Prod Environment
-  on:
-    workflow_call:
-    push:
-      branches:
-        - production
-      paths:
-        - 'assets/**'
-  
-  jobs:
-    # -------------------------------
-    # Import test assets to wM.io
-    # -------------------------------
-    Promote-Prod-Assets:
-      uses: HMHansson/ICA-DevOps/.github/workflows/promote.yml@main
-      secrets: inherit
-      with:
-        environment: Production
-      
-    # -------------------------------
-    # Validate PROD with test cases
-    # -------------------------------
-    Validate-Prod:
-      if: ${{ always() && contains(join(needs.*.result, ','), 'success') }}
-      needs: [Promote-Prod-Assets]
-      uses: HMHansson/ICA-DevOps/.github/workflows/validation-bruno.yml@main
-      secrets: inherit
-      with:
-        environment: Production
+name: Deploy Production
+run-name: Promote to Prod Environment
+on:
+  workflow_call:
+  push:
+    branches:
+      - production
+    paths:
+      - 'assets/**'
+
+jobs:
+  # -------------------------------
+  # Import test assets to wM.io
+  # -------------------------------
+  Promote-Prod-Assets:
+    uses: HMHansson/ICA-DevOps/.github/workflows/promote.yml@main
+    secrets: inherit
+    with:
+      environment: Production
+    
+  # -------------------------------
+  # Validate PROD with test cases
+  # -------------------------------
+  Validate-Prod:
+    if: ${{ always() && contains(join(needs.*.result, ','), 'success') }}
+    needs: [Promote-Prod-Assets]
+    uses: HMHansson/ICA-DevOps/.github/workflows/validation-bruno.yml@main
+    secrets: inherit
+    with:
+      environment: Production
   
   
