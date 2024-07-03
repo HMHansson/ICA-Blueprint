@@ -6,7 +6,7 @@
 #     1) Run predefined tests for this project in wM.io DEV environment
 #        - Calls workflow postman-validation to perform tests
 #   
-#     2) If validation successful:
+#     2) If validation successful: 
 #        - Check out development branch 
 #        - Run an export of all dev assets for this project in wM.io
 #        - Perform a commit/push to git origin for this development branch
