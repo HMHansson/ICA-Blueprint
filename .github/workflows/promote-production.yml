@@ -16,7 +16,7 @@
       branches:
         - production
       paths:
-        - 'assets/do_not_promote/**'
+        - 'assets/**'
   
   jobs:
     # -------------------------------
