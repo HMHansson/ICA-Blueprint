@@ -1,0 +1,11 @@
+{
+    "name": "TestCollection",
+    "version": "1.0.0",
+    "scripts": {
+        "start": "node index.js"
+    },
+    "dependencies": {
+        "@usebruno/cli": "^1.3.0",
+        "xml2js": "^0.6.2"
+    }
+}

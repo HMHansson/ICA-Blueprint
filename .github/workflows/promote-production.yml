@@ -1,0 +1,45 @@
+# ------------------------------------------------------------------------------
+# Github Workflow to promote to production environment 
+#
+#   - This pipeline is triggered by a github Pull Request/merge 
+#
+#   1) Checks out prod branch 
+#   2) Run an import of all assets for this project in wM.io PROD environment
+#   3) Run predefined tests for this project in wM.io PROD environment
+#
+# ------------------------------------------------------------------------------
+  name: Deploy Production
+  run-name: Promote to Prod Environment
+  on:
+    workflow_call:
+    push:
+      branches:
+        - production
+      paths:
+        - 'assets/do_not_promote/**'
+  
+  jobs:
+    # -------------------------------
+    # Import test assets to wM.io
+    # -------------------------------
+    Promote-Prod-Assets:
+      uses: HMHansson/ICA-DevOps/.github/workflows/promote.yml@main
+      secrets:
+        WMIO_PASSWORD: ${{ secrets.WMIO_PASSWORD_PROD }}
+      with:
+        WMIO_ENVIRONMENT: production
+  
+    # -------------------------------
+    # Validate PROD with test cases
+    # -------------------------------
+    Validate-Prod:
+      if: ${{ always() && contains(join(needs.*.result, ','), 'success') }}
+      needs: [Promote-Prod-Assets]
+      uses: HMHansson/ICA-DevOps/.github/workflows/validation-bruno.yml@main
+      secrets:
+        B2B_PASSWORD: ${{ secrets.B2B_PASSWORD_PROD }}
+        WMIO_PASSWORD: ${{ secrets.WMIO_PASSWORD_PROD }}
+      with:
+        WMIO_ENVIRONMENT: production
+  
+  

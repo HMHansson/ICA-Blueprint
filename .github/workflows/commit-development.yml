@@ -1,0 +1,36 @@
+# ------------------------------------------------------------------------------
+# Github Workflow to commit to development branch ...
+#
+#   - This pipeline is triggered manually by developers at various times
+#     
+#     1) Run predefined tests for this project in wM.io DEV environment
+#        - Calls workflow postman-validation to perform tests
+#   
+#     2) If validation successful:
+#        - Check out development branch 
+#        - Run an export of all dev assets for this project in wM.io
+#        - Perform a commit/push to git origin for this development branch
+# 
+# ------------------------------------------------------------------------------
+name: Commit Development
+run-name: Validate and Commit
+on: [workflow_dispatch]
+
+jobs:
+  Validate-Dev:
+    uses: HMHansson/ICA-DevOps/.github/workflows/validation-bruno.yml@main
+    secrets:
+      B2B_PASSWORD: ${{ secrets.B2B_PASSWORD_DEV }}
+      WMIO_PASSWORD: ${{ secrets.WMIO_PASSWORD_DEV }}
+    with:
+      WMIO_ENVIRONMENT: development
+
+  Commit-Development-Assets:
+    if: ${{ always() && contains(join(needs.*.result, ','), 'success') }}
+    needs: [Validate-Dev]
+    uses: HMHansson/ICA-DevOps/.github/workflows/commit-development.yml@main
+    secrets:
+      WMIO_PASSWORD: ${{ secrets.WMIO_PASSWORD_DEV }}
+    with:
+      WMIO_ENVIRONMENT: development
+  

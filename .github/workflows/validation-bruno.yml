@@ -1,0 +1,25 @@
+# ------------------------------------------------------------------------------
+# Github Workflow to validate functionality using Postman Collections
+#
+#  - This pipeline is triggered by
+#     a) Manually start this workflow (from Github actions)
+#     b) commit/push bruno test cases to development branch (using git client)
+#
+# ------------------------------------------------------------------------------
+name: Dev Test Case Validation
+run-name: Test Cases Validation
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - development
+    paths:
+      - 'test/TestCollection/**'
+jobs:
+  Run-Dev-Tests:
+    uses: HMHansson/ICA-DevOps/.github/workflows/validation-bruno.yml@main
+    secrets:
+      B2B_PASSWORD: ${{ secrets.B2B_PASSWORD_DEV }}
+      WMIO_PASSWORD: ${{ secrets.WMIO_PASSWORD_DEV }}
+    with:
+      WMIO_ENVIRONMENT: ${{ github.WMIO_ENVIRONMENT }}

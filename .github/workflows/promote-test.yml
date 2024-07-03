@@ -1,0 +1,44 @@
+# ------------------------------------------------------------------------------
+# Github Workflow to promote to test environment 
+#
+#   - This pipeline is triggered by a github Pull Request/merge 
+#
+#   1) Checks out test branch 
+#   2) Run an import of all test assets for this project in wM.io TEST environment
+#   3) Run predefined tests for this project in wM.io TEST environment
+#
+# ------------------------------------------------------------------------------
+name: Deploy Test
+run-name: Promote to Test Environment
+on:
+  workflow_call:
+  push:
+    branches:
+      - test
+    paths:
+      - 'assets/do_not_promote/**'
+
+jobs:
+  # -------------------------------
+  # Import test assets to wM.io
+  # -------------------------------
+  Promote-Test-Assets:
+    uses: HMHansson/ICA-DevOps/.github/workflows/promote.yml@main
+    secrets:
+      WMIO_PASSWORD: ${{ secrets.WMIO_PASSWORD_TEST }}
+    with:
+      WMIO_ENVIRONMENT: test
+
+  # -------------------------------
+  # Validate TEST with test cases
+  # -------------------------------
+  Validate-Test:
+    if: ${{ always() && contains(join(needs.*.result, ','), 'success') }}
+    needs: [Promote-Test-Assets]
+    uses: HMHansson/ICA-DevOps/.github/workflows/validation-bruno.yml@main
+    secrets:
+      B2B_PASSWORD: ${{ secrets.B2B_PASSWORD_TEST }}
+      WMIO_PASSWORD: ${{ secrets.WMIO_PASSWORD_TEST }}
+    with:
+      WMIO_ENVIRONMENT: test
+

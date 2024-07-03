@@ -1,0 +1,14 @@
+{
+  "version": "1",
+  "name": "TestCollection",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ],
+  "scripts": {
+    "moduleWhitelist": [
+      "events", "timers"
+    ]
+  }
+}
