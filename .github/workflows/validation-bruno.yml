@@ -15,11 +15,10 @@ on:
       - development
     paths:
       - 'test/TestCollection/**'
+
+    
 jobs:
   Run-Dev-Tests:
     uses: HMHansson/ICA-DevOps/.github/workflows/validation-bruno.yml@main
-    secrets:
-      B2B_PASSWORD: ${{ secrets.B2B_PASSWORD_DEV }}
-      WMIO_PASSWORD: ${{ secrets.WMIO_PASSWORD_DEV }}
     with:
-      WMIO_ENVIRONMENT: ${{ github.WMIO_ENVIRONMENT }}
+      environment: Development
