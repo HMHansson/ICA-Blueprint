@@ -13,19 +13,19 @@
 # 
 # ------------------------------------------------------------------------------
 name: Commit Development
-run-name: Validate and Commit
+run-name: Commit Development
 on: [workflow_dispatch]
 
 jobs:
-  Validate-Dev:
+  Dev-Validation:
     uses: HMHansson/ICA-DevOps/.github/workflows/validation-bruno.yml@main
     secrets: inherit
     with:
       environment: Development
 
-  Commit-Development-Assets:
+  Commit:
     if: ${{ always() && contains(join(needs.*.result, ','), 'success') }}
-    needs: [Validate-Dev]
+    needs: [Dev-Validation]
     uses: HMHansson/ICA-DevOps/.github/workflows/commit-development.yml@main
     secrets: inherit
     with:
