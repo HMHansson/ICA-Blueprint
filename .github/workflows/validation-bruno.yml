@@ -14,8 +14,8 @@
 #         b) uses the password from the GitHub environment secrets variable
 #
 # ------------------------------------------------------------------------------
-name: Dev Test Case Validation
-run-name: Test Cases Validation
+name: Assertion Bruno Test Cases
+run-name: Test Cases Development Environment
 on:
   workflow_dispatch:
   push:
@@ -25,7 +25,7 @@ on:
       - 'test/TestCollection/**'
     
 jobs:
-  Run-Dev-Tests:
+  Dev-Validation:
     uses: HMHansson/ICA-DevOps/.github/workflows/validation-bruno.yml@main
     secrets: inherit
     with:

@@ -8,10 +8,9 @@
 #   3) Run predefined tests for this project in wM.io PROD environment
 #
 # ------------------------------------------------------------------------------
-name: Deploy Production
-run-name: Promote to Prod Environment
+name: Deployment Prod
+run-name: Promotion Production Environment
 on:
-  workflow_call:
   push:
     branches:
       - production
@@ -22,18 +21,18 @@ jobs:
   # -------------------------------
   # Import test assets to wM.io
   # -------------------------------
-  Promote-Prod-Assets:
+  Promote-Assets:
     uses: HMHansson/ICA-DevOps/.github/workflows/promote.yml@main
     secrets: inherit
     with:
       environment: Production
-    
+
   # -------------------------------
   # Validate PROD with test cases
   # -------------------------------
-  Validate-Prod:
+  QA-Prod:
     if: ${{ always() && contains(join(needs.*.result, ','), 'success') }}
-    needs: [Promote-Prod-Assets]
+    needs: [Promote-Assets]
     uses: HMHansson/ICA-DevOps/.github/workflows/validation-bruno.yml@main
     secrets: inherit
     with:

@@ -8,10 +8,9 @@
 #   3) Run predefined tests for this project in wM.io TEST environment
 #
 # ------------------------------------------------------------------------------
-name: Deploy Test
-run-name: Promote to Test Environment
+name: Deployment QA-Test
+run-name: Promotion Test Environment
 on:
-  workflow_call:
   push:
     branches:
       - test
@@ -22,7 +21,7 @@ jobs:
   # -------------------------------
   # Import test assets to wM.io
   # -------------------------------
-  Promote-Test-Assets:
+  Promote-Assets:
     uses: HMHansson/ICA-DevOps/.github/workflows/promote.yml@main
     secrets: inherit
     with:
@@ -31,9 +30,9 @@ jobs:
   # -------------------------------
   # Validate TEST with test cases
   # -------------------------------
-  Validate-Test:
+  QA-Test:
     if: ${{ always() && contains(join(needs.*.result, ','), 'success') }}
-    needs: [Promote-Test-Assets]
+    needs: [Promote-Assets]
     uses: HMHansson/ICA-DevOps/.github/workflows/validation-bruno.yml@main
     secrets: inherit
     with:
