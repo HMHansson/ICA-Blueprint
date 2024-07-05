@@ -9,7 +9,7 @@ get {
   body: none
   auth: basic
 }
- 
+
 query {
   contentPartName: mappedPayload
   transactionId: {{transactionId}}
@@ -27,6 +27,12 @@ auth:basic {
 
 assert {
   res.status: eq 200
+}
+
+script:pre-request {
+  console.log('Base URL: ' + bru.getEnvVar("WMIO_URL"));
+  console.log('Transaction Id: ' + bru.getVar("transactionId"));
+  
 }
 
 script:post-response {
