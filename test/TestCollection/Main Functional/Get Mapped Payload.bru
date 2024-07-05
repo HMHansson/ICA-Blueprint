@@ -29,15 +29,9 @@ assert {
   res.status: eq 200
 }
 
-script:pre-request {
-  console.log('Base URL: ' + bru.getEnvVar("WMIO_URL"));
-  console.log('VTransaction Id: ' + bru.getVar("transactionId"));
-  console.log('ETransaction Id: ' + bru.getEnvVar("transactionId"));
-  console.log('PTransaction Id: ' + bru.getProcessEnv("transactionId"));
-}
-
 script:post-response {
-  const xml2js = require('xml2js');
+  console.log(res.body);
+  xml2js = require('xml2js');
   // Parse XML and convert to Json
   xml2js.parseString(res.body, function (err, result) {
       if (err) {
