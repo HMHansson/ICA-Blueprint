@@ -30,7 +30,7 @@ assert {
 }
 
 script:post-response {
-  console.log(req.getUrl());
+  console.log("Request URL: " + req.getUrl());
   require('xml2js');
   // Parse XML and convert to Json
   xml2js.parseString(res.body, function (err, result) {
