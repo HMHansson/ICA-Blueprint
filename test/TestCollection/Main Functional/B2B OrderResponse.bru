@@ -29,12 +29,14 @@ vars:post-response {
 }
 
 assert {
-  res.body.envelopeDocuments[0].transactionDocuments[0].docID: isDefined 
+  res.body.envelopeDocuments[0].transactionDocuments[0].docID: isDefined
   res.status: eq 200
 }
 
 script:post-response {
   console.log(res.body);
+  console.log("Transaction Id: " + res.body.envelopeDocuments[0].transactionDocuments[0].docID);
+  
 }
 
 tests {
