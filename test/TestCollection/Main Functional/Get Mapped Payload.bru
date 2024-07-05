@@ -31,8 +31,9 @@ assert {
 
 script:pre-request {
   console.log('Base URL: ' + bru.getEnvVar("WMIO_URL"));
-  console.log('Transaction Id: ' + bru.getVar("transactionId"));
-  
+  console.log('VTransaction Id: ' + bru.getVar("transactionId"));
+  console.log('ETransaction Id: ' + bru.getEnvVar("transactionId"));
+  console.log('PTransaction Id: ' + bru.getProcessEnv("transactionId"));
 }
 
 script:post-response {

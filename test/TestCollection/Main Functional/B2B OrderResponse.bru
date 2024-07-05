@@ -29,7 +29,7 @@ vars:post-response {
 }
 
 assert {
-  res.body.envelopeDocuments[0].transactionDocuments[0].docID: isDefined
+  res.body.envelopeDocuments[0].transactionDocuments[0].docID: isDefined 
   res.status: eq 200
 }
 
