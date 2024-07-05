@@ -30,8 +30,10 @@ assert {
 }
 
 script:post-response {
-  console.log(res.body);
-  xml2js = require('xml2js');
+  console.log(req.getUrl());
+  console.log(req.getMethod());
+  console.log(req.getHeaders());
+  require('xml2js');
   // Parse XML and convert to Json
   xml2js.parseString(res.body, function (err, result) {
       if (err) {
