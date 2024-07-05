@@ -1,7 +1,7 @@
 meta {
   name: Get Mapped Payload
   type: http
-  seq: 2
+  seq: 1
 }
 
 get {
@@ -10,7 +10,7 @@ get {
   auth: basic
 }
 
-query {
+params:query {
   contentPartName: mappedPayload
   transactionId: {{transactionId}}
 }
@@ -30,8 +30,7 @@ assert {
 }
 
 script:post-response {
-  console.log("Request URL: " + req.getUrl());
-  require('xml2js');
+  const xml2js = require('xml2js');
   // Parse XML and convert to Json
   xml2js.parseString(res.body, function (err, result) {
       if (err) {

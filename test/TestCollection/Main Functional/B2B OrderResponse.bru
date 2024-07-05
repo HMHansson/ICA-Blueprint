@@ -24,10 +24,6 @@ body:text {
   UNA:+.? 'UNB+UNOC:3+6438116000101:14+6438116000999:14+240216:1251+1822588041'UNH+1822588041+ORDRSP:D:96A:UN:EAN005'BGM+231+412742893+4'DTM+137:202402161251:203'RFF+ON:35168'NAD+BY+7301004119204::9'NAD+SU+7310865000002::9'LIN+10+7+15711953088787:EU::9'PIA+1+69893:SA'QTY+21:0'QVR+-2:21+CP+AV::9SE'RFF+ON:35168:10'UNS+S'CNT+1:0'UNT+14+1822588041'UNZ+1+1822588041'
 }
 
-vars:post-response {
-  transactionId: res.body.envelopeDocuments[0].transactionDocuments[0].docID
-}
-
 assert {
   res.body.envelopeDocuments[0].transactionDocuments[0].docID: isDefined
   res.status: eq 200
@@ -36,6 +32,7 @@ assert {
 script:post-response {
   console.log(res.body);
   console.log("Transaction Id: " + res.body.envelopeDocuments[0].transactionDocuments[0].docID);
+  bru.setEnvVar("transactionId",res.body.envelopeDocuments[0].transactionDocuments[0].docID);
   
 }
 
